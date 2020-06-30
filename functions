@@ -1,0 +1,19 @@
+//handynotes.ru/2008/09/javascript-closure-example.html
+//Сам скрипт должен запускаться в самом конце страницы, так как он самостоятельно находит все элементы ввода (INPUT) с заполненными дифолтовыми значениями.
+//Каждому полю INPUT он присваивает два события, одно по приему фокуса прячет значение по умолчанию, другое по потере фокуса восстанавливает его, либо нет, при наличии пользовательского ввода.
+//Сами присваиваемые события как раз и реализованы на замыканиях, а дифолтовое значение (defvalue), для каждого из полей ввода, используется с применением метода затенения.
+
+var aInputs = document.body.getElementsByTagName(”INPUT”);
+for (i = 0, max = aInputs.length; i < max; i++) {
+    if (aInputs[i].type == ’text’ && aInputs[i].value != ”) {
+        defvalue = aInputs[i].value;
+        (function(defvalue) { 
+            aInputs[i].onfocus = function () {
+                if (this.value == defvalue) this.value = ”;
+            }
+            aInputs[i].onblur = function () {
+                if (this.value == ”) this.value = defvalue;
+            }
+        })(defvalue);
+    } 
+}
